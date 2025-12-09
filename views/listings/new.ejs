@@ -1,0 +1,139 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container mt-5 mb-5">
+  <h2 class="text-center mb-4">Create a New Listing</h2>
+
+  <form
+    method="POST"
+    action="/listings"
+    novalidate
+    class="needs-validation p-4 shadow rounded"
+    style="background: #fff"
+    enctype="multipart/form-data"
+  >
+    <!-- Title -->
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input
+        id="title"
+        name="listing[title]"
+        placeholder="Add a catchy title"
+        type="text"
+        class="form-control"
+        required
+      />
+    </div>
+
+    <!-- ⭐ Category select (Updated) -->
+    <div class="mb-3">
+      <label for="category" class="form-label">Category</label>
+      <select
+        id="category"
+        name="listing[category]"
+        class="form-select"
+        required
+      >
+        <option value="">-- Select Category --</option>
+        <option value="mountain">Mountain</option>
+        <option value="beach">Beach</option>
+        <option value="forest">Forest</option>
+        <option value="city">City</option>
+        <option value="village">Village</option>
+        <option value="snow">Snow</option>
+        <option value="desert">Desert</option>
+        <option value="temple">Temple</option>
+      </select>
+    </div>
+
+    <!-- Description -->
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea
+        id="description"
+        name="listing[description]"
+        class="form-control"
+        rows="3"
+        placeholder="Describe your property"
+        required
+      ></textarea>
+    </div>
+
+    <!-- Image Upload -->
+    <div class="mb-3">
+      <label for="image" class="form-label">Upload Image</label>
+      <input
+        id="image"
+        name="listing[image]"
+        type="file"
+        class="form-control"
+      />
+    </div>
+
+    <div class="row">
+      <!-- Price -->
+      <div class="mb-3 col-md-4">
+        <label for="price" class="form-label">Price (₹)</label>
+        <input
+          id="price"
+          name="listing[price]"
+          placeholder="1200"
+          type="number"
+          class="form-control"
+          required
+        />
+      </div>
+
+      <!-- Country -->
+      <div class="mb-3 col-md-8">
+        <label for="country" class="form-label">Country</label>
+        <input
+          id="country"
+          name="listing[country]"
+          placeholder="India"
+          type="text"
+          class="form-control"
+          required
+        />
+      </div>
+    </div>
+
+    <!-- Location -->
+    <div class="mb-3">
+      <label for="location" class="form-label">Location</label>
+      <input
+        id="location"
+        name="listing[location]"
+        placeholder="Mumbai, Maharashtra"
+        type="text"
+        class="form-control"
+        required
+      />
+    </div>
+
+    <!-- Submit Button -->
+    <button class="btn add-btn w-100 py-2 mt-2" type="submit">
+      + Add Listing
+    </button>
+
+    <!-- Client-side validation script -->
+    <script>
+      (() => {
+        "use strict";
+        const forms = document.querySelectorAll(".needs-validation");
+        Array.from(forms).forEach((form) => {
+          form.addEventListener(
+            "submit",
+            (event) => {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      })();
+    </script>
+  </form>
+</div>

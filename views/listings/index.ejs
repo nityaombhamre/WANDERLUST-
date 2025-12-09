@@ -1,0 +1,276 @@
+<% layout("/layouts/boilerplate") %> <% if (success && success.length > 0) { %>
+<div class="alert alert-success"><%= success[0] %></div>
+<% } %>
+
+<style>
+  /* FILTER BAR + TAX TOGGLE */
+  #filters-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 1rem 0;
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  #filters-container {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    flex-grow: 1;
+    padding-bottom: 0.5rem;
+  }
+
+  #filters-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  #filters {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    white-space: nowrap;
+    gap: 0.8rem;
+  }
+
+  .filter {
+    flex: 0 0 auto;
+    text-align: center;
+    opacity: 0.7;
+    font-size: 0.9rem;
+  }
+
+  .filter i {
+    font-size: 1.2rem;
+  }
+
+  .filter:hover {
+    opacity: 1;
+    cursor: pointer;
+  }
+
+  .tax-toggle {
+    border: 1px solid #e2e2e2;
+    padding: 0.5rem 0.8rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    background: white;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+    flex-shrink: 0;
+    margin-left: auto;
+    font-size: 0.85rem;
+  }
+
+  .tax-info {
+    display: none;
+    font-size: 0.85rem;
+  }
+
+  /* LISTINGS CARDS */
+  .listing-card {
+    margin-bottom: 1rem;
+  }
+
+  .listing-card img {
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+    max-height: 20rem;
+    border-radius: 5px;
+  }
+
+  /* MAP RESPONSIVE */
+  #map {
+    width: 80%;
+    max-width: 100%;
+    height: 400px;
+    border-radius: 10px;
+  }
+
+  /* MEDIA QUERIES */
+  @media (max-width: 1200px) {
+    #filters-wrapper {
+      gap: 0.4rem;
+    }
+    .filter i {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    #filters-wrapper {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .tax-toggle {
+      margin-left: 0;
+      margin-top: 0.5rem;
+    }
+    .listing-card img {
+      max-height: 15rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .listing-card img {
+      max-height: 12rem;
+    }
+    .filter p {
+      font-size: 0.75rem;
+    }
+  }
+</style>
+
+<!-- FILTER BAR + TAX TOGGLE -->
+<div id="filters-wrapper">
+  <div id="filters-container">
+    <div id="filters">
+      <div class="filter">
+        <i class="fa-solid fa-fire"></i>
+        <p>Trending</p>
+      </div>
+      <div class="filter">
+        <i class="fa-solid fa-bed"></i>
+        <p>Rooms</p>
+      </div>
+      <div class="filter">
+        <i class="fa-solid fa-mountain-city"></i>
+        <p>Iconic Cities</p>
+      </div>
+      <div class="filter">
+        <i class="fa-solid fa-mountain"></i>
+        <p>Mountains</p>
+      </div>
+      <div class="filter">
+        <i class="fa-solid fa-umbrella-beach"></i>
+        <p>Beachfront</p>
+      </div>
+      <div class="filter">
+        <i class="fa-solid fa-sun"></i>
+        <p>Desert Homes</p>
+      </div>
+      <div class="filter">
+        <i class="fa-solid fa-home"></i>
+        <p>Tiny Homes</p>
+      </div>
+      <div class="filter">
+        <i class="fa-brands fa-person-swimming"></i>
+        <p>Castles</p>
+      </div>
+      <div class="filter">
+        <i class="fa-solid fa-campground"></i>
+        <p>Camping</p>
+      </div>
+      <div class="filter">
+        <i class="fa-solid fa-cow"></i>
+        <p>Farms</p>
+      </div>
+      <div class="filter">
+        <i class="fa-regular fa-snowflake"></i>
+        <p>Arctic</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tax-toggle">
+    <label class="mb-0 me-2" for="flexSwitchCheckDefault"
+      >Display total after taxes</label
+    >
+    <input
+      class="form-check-input"
+      type="checkbox"
+      id="flexSwitchCheckDefault"
+    />
+  </div>
+</div>
+
+<!-- LISTINGS -->
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+  <% for (let listing of allListings) { %>
+  <a href="/listings/<%= listing._id %>" class="listing-link">
+    <div class="card col listing-card" data-category="<%= listing.category %>">
+      <img
+        src="<%= listing.image?.url || 'https://source.unsplash.com/random/?house' %>"
+        class="card-img-top"
+        alt="listing_image"
+      />
+      <div class="card-body">
+        <p class="card-text">
+          <b><%= listing.title %></b><br />
+          ₹ <%= listing.price?.toLocaleString("en-IN") %> / night
+          <i class="tax-info">&nbsp;&nbsp;+18% GST</i>
+        </p>
+      </div>
+    </div>
+  </a>
+  <% } %>
+</div>
+
+<hr />
+
+<!-- MAP -->
+<div class="row mt-5 mb-5">
+  <div class="col-12">
+    <h3 class="map-title">All Listings Map</h3>
+    <div id="map"></div>
+  </div>
+</div>
+
+<script>
+  mapboxgl.accessToken = "<%= mapToken %>";
+
+  const listings = <%- JSON.stringify(
+    allListings
+      .filter(l => Array.isArray(l.geometry?.coordinates) && l.geometry.coordinates.length === 2)
+      .map(l => ({ _id: l._id, title: l.title, coordinates: l.geometry.coordinates.map(Number) }))
+  ) %>;
+
+  let center = [78.9629, 20.5937]; // Default India
+  if (listings.length) {
+    const firstValid = listings.find(l => l.coordinates.every(c => !isNaN(c)));
+    if (firstValid) center = firstValid.coordinates;
+  }
+
+  const map = new mapboxgl.Map({
+    container: "map",
+    style: "mapbox://styles/mapbox/streets-v12",
+    center,
+    zoom: 5
+  });
+
+  listings.forEach(l => {
+    if (l.coordinates.every(c => !isNaN(c))) {
+      new mapboxgl.Marker({ color: "red" })
+        .setLngLat(l.coordinates)
+        .setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(`<a href="/listings/${l._id}">${l.title}</a>`))
+        .addTo(map);
+    }
+  });
+
+  const categoryMap = {
+    "Trending":"mountain","Rooms":"beach","Iconic Cities":"city","Mountains":"mountain",
+    "Castles":"village","Camping":"forest","Farms":"desert","Arctic":"snow",
+    "Beachfront":"beachfront","Desert Homes":"desert","Tiny Homes":"tiny"
+  };
+
+  document.querySelectorAll("#filters .filter").forEach(f => {
+    f.addEventListener("click", () => {
+      const cat = categoryMap[f.querySelector("p").innerText];
+      document.querySelectorAll(".listing-card").forEach(card => {
+        card.parentElement.style.display = !cat || card.dataset.category === cat ? "block" : "none";
+      });
+    });
+  });
+
+  document.getElementById("flexSwitchCheckDefault").addEventListener("click", () => {
+    [...document.getElementsByClassName("tax-info")].forEach(info => {
+      info.style.display = info.style.display !== "inline" ? "inline" : "none";
+    });
+  });
+
+  // Make map responsive
+  window.addEventListener("resize", () => {
+    map.resize();
+  });
+</script>

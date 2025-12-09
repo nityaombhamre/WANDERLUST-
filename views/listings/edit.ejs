@@ -1,0 +1,113 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container mt-5 mb-5">
+  <h2 class="text-center mb-4">Edit Your Listing</h2>
+
+  <form
+    method="POST"
+    action="/listings/<%= listing._id %>?_method=PUT"
+    class="p-4 shadow rounded"
+    style="background: #fff"
+    enctype="multipart/form-data"
+  >
+    <!-- Title -->
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input
+        id="title"
+        name="listing[title]"
+        type="text"
+        value="<%= listing.title %>"
+        class="form-control"
+        required
+      />
+    </div>
+
+    <!-- ⭐ Category select (Added) -->
+    <div class="mb-3">
+      <label for="category" class="form-label">Category</label>
+      <select id="category" name="listing[category]" class="form-select" required>
+        <option value="">-- Select Category --</option>
+        <option value="mountain" <%= listing.category === "mountain" ? "selected" : "" %>>Mountain</option>
+        <option value="beach" <%= listing.category === "beach" ? "selected" : "" %>>Beach</option>
+        <option value="forest" <%= listing.category === "forest" ? "selected" : "" %>>Forest</option>
+        <option value="city" <%= listing.category === "city" ? "selected" : "" %>>City</option>
+        <option value="village" <%= listing.category === "village" ? "selected" : "" %>>Village</option>
+        <option value="snow" <%= listing.category === "snow" ? "selected" : "" %>>Snow</option>
+        <option value="desert" <%= listing.category === "desert" ? "selected" : "" %>>Desert</option>
+        <option value="temple" <%= listing.category === "temple" ? "selected" : "" %>>Temple</option>
+      </select>
+    </div>
+
+    <!-- Description -->
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea
+        id="description"
+        name="listing[description]"
+        class="form-control"
+        rows="3"
+        required
+      ><%= listing.description %></textarea>
+    </div>
+
+    <!-- Image Upload -->
+    <div class="mb-3">
+      <label for="image" class="form-label">Upload New Image</label>
+      <input
+        id="image"
+        name="listing[image]"
+        type="file"
+        class="form-control"
+      />
+    </div>
+
+    <div class="row">
+      <!-- Price -->
+      <div class="mb-3 col-md-4">
+        <label for="price" class="form-label">Price (₹)</label>
+        <input
+          id="price"
+          name="listing[price]"
+          type="number"
+          value="<%= listing.price %>"
+          class="form-control"
+          required
+        />
+      </div>
+
+      <!-- Country -->
+      <div class="mb-3 col-md-8">
+        <label for="country" class="form-label">Country</label>
+        <input
+          id="country"
+          name="listing[country]"
+          type="text"
+          value="<%= listing.country %>"
+          class="form-control"
+          required
+        />
+      </div>
+    </div>
+
+    <!-- Location -->
+    <div class="mb-3">
+      <label for="location" class="form-label">Location</label>
+      <input
+        id="location"
+        name="listing[location]"
+        type="text"
+        value="<%= listing.location %>"
+        class="form-control"
+        required
+      />
+    </div>
+
+    <!-- Submit Button -->
+    <button class="btn add-btn w-100 py-2 mt-2" type="submit">
+      Save Changes
+    </button>
+  </form>
+</div>
+
+

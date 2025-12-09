@@ -1,0 +1,163 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+/* Global Styles */
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  flex: 1;
+}
+
+/* Navbar */
+.navbar {
+  height: 5rem;
+  background-color: white;
+}
+
+.fa-compass {
+  color: #fe424d;
+  font-size: 2rem;
+}
+
+.nav-link {
+  color: #222222 !important;
+}
+
+/* Footer */
+.f-info-links a {
+  color: #222222 !important;
+  text-decoration: none;
+}
+
+.f-info-links a:hover {
+  text-decoration: underline;
+}
+
+.f-info-links,
+.f-info-socials,
+.f-info-brand {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.f-info-socials i {
+  margin-right: 1rem;
+  font-size: 1.2rem;
+}
+
+.f-info {
+  text-align: center;
+  height: 8rem;
+  background-color: #ebebeb;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: space-evenly;
+}
+
+/* Cards */
+.listing-card {
+  border: none !important;
+  margin-bottom: 2rem;
+}
+
+.card-img-top {
+  border-radius: 1rem !important;
+  width: 100% !important;
+  height: 250px;       /* fixed height for uniformity */
+  object-fit: cover !important;  /* crops image nicely */
+}
+
+.card-body {
+  padding: 0 !important;
+}
+
+.card-text {
+  font-weight: 400 !important;
+}
+
+.listing-link {
+  text-decoration: none !important;
+}
+
+/* Card Hover Effects */
+.card-img-overlay {
+  opacity: 0;
+  transition: 0.3s ease-in-out;
+}
+
+.card:hover .card-img-overlay {
+  opacity: 0.25;
+  background-color: white;
+}
+
+/* New Page - Add Button */
+.add-btn {
+  background-color: #fe424d !important;
+  border: none !important;
+  color: white !important;
+}
+
+/* Show Page Card */
+.show-card {
+  padding-left: 0;
+  padding-right: 0;
+
+  /* Fix: make all cards same height */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Show Page Image */
+.show-img {
+  width: 100%;          /* full width */
+  height: 250px;        /* same height for all cards */
+  object-fit: cover;    /* maintain aspect ratio */
+  border-radius: 1rem;  /* consistent with card */
+}
+
+/* Buttons on Show Page */
+.btns {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Fix: uniform card body height */
+.card-body {
+  flex: 1 1 auto;  /* let it grow evenly */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem !important; /* optional padding */
+}
+
+/* Make columns flex so all cards in a row are same height */
+.row > .col-md-4.d-flex {
+  display: flex;
+}
+
+
+
+/* map */
+
+#map {
+  width: 80vh;          /* make it smaller so it can center */
+  height: 400px;
+  border-radius: 10px;
+  margin: 0 auto;      /* THIS centers it horizontally */
+}
+.map-title {
+  margin-bottom: 10px;
+  text-align: center;
+  
+} 
